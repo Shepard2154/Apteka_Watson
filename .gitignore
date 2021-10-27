@@ -1,0 +1,4 @@
+*.log
+*.odt
+venv
+.env
