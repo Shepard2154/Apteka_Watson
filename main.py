@@ -25,23 +25,20 @@ while True:
         logger.debug(product) 
         logger.debug(f"checking existense of {product.get('regId')} ({product.get('tovName')}) product in Watson...")
         count += 1
-        if id != None:
-            updating = watson.update_product(id, product.get('price'), float(product.get('remainder')))
+        if id:
+            updating = watson.update_product(id, int(product.get('price')), float(product.get('remainder')))
             logger.debug(f"updated [{count}/{len(products)}] product!")
             logger.debug(updating)  
         else:
-            watson.create_product(
+            creating = watson.create_product(
                 product.get('regId'), 
                 product.get('tovName'), 
-                product.get('price'), 
+                int(product.get('price')), 
                 product.get('fabr'), 
                 product.get('remainder')
                 )
             logger.debug(f"created [{count}/{len(products)}] product!")
-             
-        # if count % 200 == 0:
-        #     s = requests.Session()
-        #     web_api_session = farmnet.get_session_id(s, farmnet.CUSTOMER_ID, farmnet.PASSWORD)
+            logger.info(creating)
 
     end_time = datetime.now().time()
     logger.debug(f"work time: {start_time} - {end_time}")
