@@ -9,12 +9,13 @@ import watson
 
 logger.add("main.log", format="{time}  {message}", level="DEBUG", rotation="500 MB", compression="zip", encoding='utf-8')
 
-start_time = datetime.now().time()
 
 while True:
+    start_time = datetime.now().time()
     s = requests.Session()
     web_api_session = farmnet.get_session_id(s, farmnet.CUSTOMER_ID, farmnet.PASSWORD)
 
+    logger.debug(f"downloading products...") 
     products = farmnet.get_products(s, web_api_session)
     logger.debug(f"downloaded {len(products)} products")            
 
@@ -26,7 +27,12 @@ while True:
         logger.debug(f"checking existense of {product.get('regId')} ({product.get('tovName')}) product in Watson...")
         count += 1
         if id:
-            updating = watson.update_product(id, int(product.get('price')), float(product.get('remainder')))
+            updating = watson.update_product(id, int(product.get('price')), float(product.get('remainder')), {
+                'expire-time': product.get('expire-time'),
+                'form-issue': product.get('form-issue'),
+                'manufacturer': product.get('manufacturer'),
+                'recipe': product.get('recipe')
+            })
             logger.debug(f"updated [{count}/{len(products)}] product!")
             logger.debug(updating)  
         else:
@@ -35,7 +41,13 @@ while True:
                 product.get('tovName'), 
                 int(product.get('price')), 
                 product.get('fabr'), 
-                product.get('remainder')
+                product.get('remainder'),
+                {
+                    'expire-time': product.get('expire-time'),
+                    'form-issue': product.get('form-issue'),
+                    'manufacturer': product.get('manufacturer'),
+                    'recipe': product.get('recipe')
+                }
                 )
             logger.debug(f"created [{count}/{len(products)}] product!")
             logger.info(creating)

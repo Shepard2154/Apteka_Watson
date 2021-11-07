@@ -43,22 +43,88 @@ def check_product_existence(sku: int) -> int:
         return product[0].get('id')
 
 
-def update_product(id: int, price: int, count: float) -> dict:
+def update_product(id: int, price: int, count: float, attributes: dict) -> dict:
     "POST for product updating by ID in WordPress-application (not vendor code)"
+    attributes = [
+        {
+            'name': 'expire-time',
+            "position": 0,
+            "visible": False,
+            "variation": True,
+            'options': [attributes.get('expire-time')] 
+        },
+        {
+            'name': 'form-issue',
+            "position": 0,
+            "visible": False,
+            "variation": True,
+            'options': [attributes.get('form-issue')] 
+        },
+        {
+            'name': 'manufacturer',
+            "position": 0,
+            "visible": False,
+            "variation": True,
+            'options': [attributes.get('manufacturer')]  
+        },
+        {
+            'name': 'recipe',
+            "position": 0,
+            "visible": False,
+            "variation": True,
+            'options': [str(attributes.get('recipe'))]
+        } 
+    ]
+
+
     data = {
         "regular_price": f"{price}",
         "stock_quantity": f"{count}",
+        'attributes': attributes
     }
     return wcapi.put(f"products/{id}", data).json()
 
 
-def create_product(sku: int, name: str, price: int, fabr: str, remainder: float) -> dict:
+def create_product(sku: int, name: str, price: int, fabr: str, remainder: float, attributes: dict) -> dict:
     """POST for product creating"""
+    attributes = [
+        {
+            'name': 'expire-time',
+            "position": 0,
+            "visible": False,
+            "variation": True,
+            'options': [attributes.get('expire-time')] 
+        },
+        {
+            'name': 'form-issue',
+            "position": 0,
+            "visible": False,
+            "variation": True,
+            'options': [attributes.get('form-issue')] 
+        },
+        {
+            'name': 'manufacturer',
+            "position": 0,
+            "visible": False,
+            "variation": True,
+            'options': [attributes.get('manufacturer')]  
+        },
+        {
+            'name': 'recipe',
+            "position": 0,
+            "visible": False,
+            "variation": True,
+            'options': [str(attributes.get('recipe'))]
+        } 
+    ]
+
     data = {
         'sku': f"{sku}",
         'name': f"{name}",
         'regular_price': f"{price}",
         'short_description': f"{fabr}",
         'stock_quantity': f"{float(remainder)}",
+        'attributes': attributes
+
     }
     return wcapi.post("products", data).json()

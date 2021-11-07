@@ -43,14 +43,34 @@ def download_products(session, web_api_session: str, datetime: datetime) -> dict
     return data
 
 
+def get_form_product(session, web_api_session, id):
+    """GET form of product"""
+    url = PROVIDER_DOMAIN + f"SprGoods?goodsList={id}&lastId=0"
+    request = session.get(url=url, headers={'WebApiSession': web_api_session})
+    data = json.loads(request.text)
+    return data.get('items')[0].get('mnn')
+
+
+def get_filter_fields(s, web_api_session, product: dict, id: int) -> dict:
+    """Parser of filter's fields"""
+    filter = {}
+    filter.update(
+        {
+            'expire-time': product.get('srokG'),
+            'form-issue': get_form_product(s, web_api_session, id),
+            'manufacturer': product.get('fabr')
+        }
+    )
+    return filter
+
+
 def get_products(s, web_api_session: str) -> list:
-    """parser of important fields of downloaded products"""
+    """Parser of important fields of downloaded products"""
     products = []
     date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     all_products = download_products(s, web_api_session, date)
     for product in all_products.get("items"):
-        products.append(
-            {
+        current_product = {
                 'regId': product.get('regId'),
                 'tovName': product.get('tovName'),
                 'price': product.get('priceRoznWNDS'),
@@ -58,5 +78,13 @@ def get_products(s, web_api_session: str) -> list:
                 'fabr': product.get('fabr'),
                 'remainder': product.get('uQntOst')                
             }
-        )
+        filter = get_filter_fields(s, web_api_session, product, product.get('regId'))
+        current_product.update(filter)
+        products.append(current_product)
     return products
+
+
+
+
+
+
