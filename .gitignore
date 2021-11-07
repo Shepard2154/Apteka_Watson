@@ -2,3 +2,5 @@
 *.odt
 venv
 .env
+__pycache__
+*.txt
