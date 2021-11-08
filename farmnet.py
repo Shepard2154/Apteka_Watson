@@ -56,9 +56,10 @@ def get_filter_fields(s, web_api_session, product: dict, id: int) -> dict:
     filter = {}
     filter.update(
         {
-            'expire-time': product.get('srokG'),
-            'form-issue': get_form_product(s, web_api_session, id),
-            'manufacturer': product.get('fabr')
+            'Срок годности': product.get('srokG'),
+            'Форма выпуска': get_form_product(s, web_api_session, id),
+            'Производитель': product.get('fabr'),
+            'Отпуск по рецепту': product.get('recipe')
         }
     )
     return filter

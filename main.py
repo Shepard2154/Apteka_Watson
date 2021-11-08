@@ -28,11 +28,12 @@ while True:
         count += 1
         if id:
             updating = watson.update_product(id, int(product.get('price')), float(product.get('remainder')), {
-                'expire-time': product.get('expire-time'),
-                'form-issue': product.get('form-issue'),
-                'manufacturer': product.get('manufacturer'),
-                'recipe': product.get('recipe')
-            })
+                'Срок годности': product.get('Срок годности'),
+                'Форма выпуска': product.get('Форма выпуска'),
+                'Производитель': product.get('Производитель'),
+                'Отпуск по рецепту': product.get('Отпуск по рецепту')
+            }
+            )
             logger.debug(f"updated [{count}/{len(products)}] product!")
             logger.debug(updating)  
         else:
@@ -43,10 +44,10 @@ while True:
                 product.get('fabr'), 
                 product.get('remainder'),
                 {
-                    'expire-time': product.get('expire-time'),
-                    'form-issue': product.get('form-issue'),
-                    'manufacturer': product.get('manufacturer'),
-                    'recipe': product.get('recipe')
+                    'Срок годности': product.get('Срок годности'),
+                    'Форма выпуска': product.get('Форма выпуска'),
+                    'Производитель': product.get('Производитель'),
+                    'Отпуск по рецепту': product.get('Отпуск по рецепту')
                 }
                 )
             logger.debug(f"created [{count}/{len(products)}] product!")

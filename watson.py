@@ -47,32 +47,32 @@ def update_product(id: int, price: int, count: float, attributes: dict) -> dict:
     "POST for product updating by ID in WordPress-application (not vendor code)"
     attributes = [
         {
-            'name': 'expire-time',
+            'name': 'Срок годности',
             "position": 0,
             "visible": False,
             "variation": True,
-            'options': [attributes.get('expire-time')] 
+            'options': [attributes.get('Срок годности')] 
         },
         {
-            'name': 'form-issue',
+            'name': 'Форма выпуска',
             "position": 0,
             "visible": False,
             "variation": True,
-            'options': [attributes.get('form-issue')] 
+            'options': [attributes.get('Форма выпуска')] 
         },
         {
-            'name': 'manufacturer',
+            'name': 'Производитель',
             "position": 0,
             "visible": False,
             "variation": True,
-            'options': [attributes.get('manufacturer')]  
+            'options': [attributes.get('Производитель')]  
         },
         {
-            'name': 'recipe',
+            'name': 'Отпуск по рецепту',
             "position": 0,
             "visible": False,
             "variation": True,
-            'options': [str(attributes.get('recipe'))]
+            'options': [str(attributes.get('Отпуск по рецепту'))]
         } 
     ]
 
@@ -89,32 +89,32 @@ def create_product(sku: int, name: str, price: int, fabr: str, remainder: float,
     """POST for product creating"""
     attributes = [
         {
-            'name': 'expire-time',
+            'name': 'Срок годности',
             "position": 0,
             "visible": False,
             "variation": True,
-            'options': [attributes.get('expire-time')] 
+            'options': [attributes.get('Срок годности')] 
         },
         {
-            'name': 'form-issue',
+            'name': 'Форма выпуска',
             "position": 0,
             "visible": False,
             "variation": True,
-            'options': [attributes.get('form-issue')] 
+            'options': [attributes.get('Форма выпуска')] 
         },
         {
-            'name': 'manufacturer',
+            'name': 'Производитель',
             "position": 0,
             "visible": False,
             "variation": True,
-            'options': [attributes.get('manufacturer')]  
+            'options': [attributes.get('Производитель')]  
         },
         {
-            'name': 'recipe',
+            'name': 'Отпуск по рецепту',
             "position": 0,
             "visible": False,
             "variation": True,
-            'options': [str(attributes.get('recipe'))]
+            'options': [str(attributes.get('Отпуск по рецепту'))]
         } 
     ]
 
