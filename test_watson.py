@@ -23,9 +23,7 @@ attributes2 = {
     'Отпуск по рецепту': 'True'
 }
 
-
-
 creating = watson.create_product(123123213123123123123, 'сам себе доктор', 100, 'Россия', 1.0, attributes1)
 print(creating)
-updating = watson.update_product(48898, 100, 1.0, attributes2)
+updating = watson.update_product(48898, 100, 1.0, attributes1)
 print(updating)

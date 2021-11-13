@@ -47,31 +47,35 @@ def update_product(id: int, price: int, count: float, attributes: dict) -> dict:
     "POST for product updating by ID in WordPress-application (not vendor code)"
     attributes = [
         {
+            'id': 5,
             'name': 'Срок годности',
-            "position": 0,
-            "visible": False,
-            "variation": True,
+            'position': 1,
+            'visible': True,
+            'variation': False,
             'options': [attributes.get('Срок годности')] 
         },
         {
+            'id': 7,
             'name': 'Форма выпуска',
-            "position": 0,
-            "visible": False,
-            "variation": True,
+            'position': 2,
+            'visible': True,
+            'variation': False,
             'options': [attributes.get('Форма выпуска')] 
         },
         {
+            'id': 4,
             'name': 'Производитель',
-            "position": 0,
-            "visible": False,
-            "variation": True,
+            'position': 4,
+            'visible': True,
+            'variation': False,
             'options': [attributes.get('Производитель')]  
         },
         {
+            'id': 6,
             'name': 'Отпуск по рецепту',
-            "position": 0,
-            "visible": False,
-            "variation": True,
+            'position': 5,
+            'visible': True,
+            'variation': False,
             'options': [str(attributes.get('Отпуск по рецепту'))]
         } 
     ]
@@ -89,31 +93,35 @@ def create_product(sku: int, name: str, price: int, fabr: str, remainder: float,
     """POST for product creating"""
     attributes = [
         {
+            'id': 5,
             'name': 'Срок годности',
-            "position": 0,
-            "visible": False,
-            "variation": True,
+            'position': 1,
+            'visible': True,
+            'variation': False,
             'options': [attributes.get('Срок годности')] 
         },
         {
+            'id': 7,
             'name': 'Форма выпуска',
-            "position": 0,
-            "visible": False,
-            "variation": True,
+            'position': 2,
+            'visible': True,
+            'variation': False,
             'options': [attributes.get('Форма выпуска')] 
         },
         {
+            'id': 4,
             'name': 'Производитель',
-            "position": 0,
-            "visible": False,
-            "variation": True,
+            'position': 4,
+            'visible': True,
+            'variation': False,
             'options': [attributes.get('Производитель')]  
         },
         {
+            'id': 6,
             'name': 'Отпуск по рецепту',
-            "position": 0,
-            "visible": False,
-            "variation": True,
+            'position': 5,
+            'visible': True,
+            'variation': False,
             'options': [str(attributes.get('Отпуск по рецепту'))]
         } 
     ]
