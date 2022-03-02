@@ -1,3 +1,5 @@
+import math
+
 from dotenv import load_dotenv
 import os
 
@@ -80,11 +82,11 @@ def update_product(id: int, price: int, count: float, attributes: dict) -> dict:
         } 
     ]
 
-
     data = {
         "regular_price": f"{price}",
-        "stock_quantity": f"{count}",
-        'attributes': attributes
+        "stock_quantity": f"{int(count)}",
+        'attributes': attributes,
+        'manage_stock': True
     }
     return wcapi.put(f"products/{id}", data).json()
 
@@ -132,7 +134,8 @@ def create_product(sku: int, name: str, price: int, fabr: str, remainder: float,
         'regular_price': f"{price}",
         'short_description': f"{fabr}",
         'stock_quantity': f"{float(remainder)}",
-        'attributes': attributes
+        'attributes': attributes,
+        'manage_stock': True
 
     }
     return wcapi.post("products", data).json()
