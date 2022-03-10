@@ -17,6 +17,12 @@ wcapi = API(
 )
 
 
+def get_vendor_code_of_all_products():
+    products = get_all_products()
+    vendor_codes = [str(product.get('sku')) for product in products]
+    return vendor_codes
+
+
 def get_all_products() -> list:
     """GET for getting of all products from WordPress-application"""
     page = 1
@@ -45,7 +51,7 @@ def check_product_existence(sku: int) -> int:
         return product[0].get('id')
 
 
-def update_product(id: int, price: int, count: float, attributes: dict) -> dict:
+def update_product(id, price, count, attributes):
     "POST for product updating by ID in WordPress-application (not vendor code)"
     attributes = [
         {
@@ -84,8 +90,16 @@ def update_product(id: int, price: int, count: float, attributes: dict) -> dict:
 
     data = {
         "regular_price": f"{price}",
-        "stock_quantity": f"{int(count)}",
+        "stock_quantity": f"{count}",
         'attributes': attributes,
+        'manage_stock': True
+    }
+    return wcapi.put(f"products/{id}", data).json()
+
+
+def nullify_product(id):
+    data = {
+        "stock_quantity": f"{0.0}",
         'manage_stock': True
     }
     return wcapi.put(f"products/{id}", data).json()
@@ -133,7 +147,7 @@ def create_product(sku: int, name: str, price: int, fabr: str, remainder: float,
         'name': f"{name}",
         'regular_price': f"{price}",
         'short_description': f"{fabr}",
-        'stock_quantity': f"{float(remainder)}",
+        'stock_quantity': f"{math.floor(remainder)}",
         'attributes': attributes,
         'manage_stock': True
 

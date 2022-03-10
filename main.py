@@ -19,6 +19,8 @@ while True:
     products = farmnet.get_products(s, web_api_session)
     logger.debug(f"downloaded {len(products)} products")            
 
+    vendor_codes_of_unupdated_products = watson.get_vendor_code_of_all_products()
+
     count = 0
     for product in products:
         id = watson.check_product_existence(product.get('regId'))
@@ -27,7 +29,14 @@ while True:
         logger.debug(f"checking existense of {product.get('regId')} ({product.get('tovName')}) product in Watson...")
         count += 1
         if id:
-            updating = watson.update_product(id, int(product.get('price')), float(product.get('remainder')), {
+            with open('vendor_codes.txt', 'w') as f:
+                f.write(str(vendor_codes_of_unupdated_products))
+            try:
+                vendor_codes_of_unupdated_products.remove(str(product.get('regId')))
+            except ValueError:
+                logger.warning(f"product with this id has already updated") 
+
+            updating = watson.update_product(id, int(product.get('price')), int(product.get('remainder')), {
                 'Срок годности': product.get('Срок годности'),
                 'Форма выпуска': product.get('Форма выпуска'),
                 'Производитель': product.get('Производитель'),
@@ -42,7 +51,7 @@ while True:
                 product.get('tovName'), 
                 int(product.get('price')), 
                 product.get('fabr'), 
-                product.get('remainder'),
+                float(product.get('remainder')),
                 {
                     'Срок годности': product.get('Срок годности'),
                     'Форма выпуска': product.get('Форма выпуска'),
@@ -52,6 +61,16 @@ while True:
                 )
             logger.debug(f"created [{count}/{len(products)}] product!")
             logger.info(creating)
+
+    logger.debug(f"count of products with 0.0 remainder: {len(vendor_codes_of_unupdated_products)}")
+
+    count = 0
+    for vendor_code in vendor_codes_of_unupdated_products:
+        id = watson.check_product_existence(vendor_code)
+        nullifying = watson.nullify_product(id)
+        count += 1
+        logger.debug(f"nullified [{count}/{len(vendor_codes_of_unupdated_products)}] product!")
+        logger.debug(nullifying)
 
     end_time = datetime.now().time()
     logger.debug(f"work time: {start_time} - {end_time}")

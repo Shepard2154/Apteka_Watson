@@ -33,7 +33,7 @@ def get_product_remainder(session, web_api_session: str, id: int) -> dict:
     request = session.get(url=url, headers={'WebApiSession': web_api_session})
     data = json.loads(request.text)
     return data
-
+    
 
 def download_products(session, web_api_session: str, datetime: datetime) -> dict:
     """GET to download all products of provider with id=13889 and current datetime"""
@@ -48,10 +48,11 @@ def get_form_product(session, web_api_session, id):
     url = PROVIDER_DOMAIN + f"SprGoods?goodsList={id}&lastId=0"
     request = session.get(url=url, headers={'WebApiSession': web_api_session})
     data = json.loads(request.text)
-    return data.get('items')[0].get('mnn')
+    form_product = data.get('items')[0].get('mnn')
+    return form_product
 
 
-def get_filter_fields(s, web_api_session, product: dict, id: int) -> dict:
+def get_filter_fields(s, web_api_session, product, id):
     """Parser of filter's fields"""
     filter = {}
     filter.update(
@@ -82,6 +83,7 @@ def get_products(s, web_api_session: str) -> list:
         filter = get_filter_fields(s, web_api_session, product, product.get('regId'))
         current_product.update(filter)
         products.append(current_product)
+
     return products
 
 

@@ -1,13 +1,13 @@
 import watson
 
 
-products = watson.get_all_products()
-watson.beautify_products(products)
+# products = watson.get_all_products()
+# watson.beautify_products(products)
 
 print(watson.check_product_existence(1022875)) # must return 43065
 print(watson.check_product_existence(2222222222222222222)) # must return 0
 
-watson.update_product(43065, 101, 2.0)
+# watson.update_product(43065, 101, 2.0)
 
 attributes1 = {
     'Срок годности': '2023-04-30',
@@ -23,7 +23,7 @@ attributes2 = {
     'Отпуск по рецепту': 'True'
 }
 
-creating = watson.create_product(123123213123123123123, 'сам себе доктор', 100, 'Россия', 1.0, attributes1)
-print(creating)
-updating = watson.update_product(48898, 100, 1.0, attributes1)
+# creating = watson.create_product(123123213123123123123, 'сам себе доктор', 100, 'Россия', 3.0, attributes1)
+# print(creating)
+updating = watson.update_product(46303, 105, 5, attributes1)
 print(updating)
